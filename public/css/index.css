@@ -1,0 +1,68 @@
+body,.navbar{
+  background-image:url(../img/bg_blue2.png); 
+  background-repeat: repeat;
+}
+.navbar{
+  border:none;
+}
+.navbar-inverse .navbar-toggle .icon-bar {
+  background-color: #440C0C;
+}
+#myCarousel{
+  margin:auto;
+  height:500px;
+}
+@media screen and (min-width: 768px) {
+    #myCarousel{
+      width:750px;
+    }
+}
+@media screen and (min-width: 992px) {
+    #myCarousel{
+      width:970px;
+    }
+}
+@media screen and (min-width: 1200px) {
+    #myCarousel{
+      width:1170px;
+    }
+}
+.navbar-inverse .navbar-brand {
+   color: #250808;
+   font-weight: 600;
+   font-family: '微軟正黑體';
+}
+.navbar-inverse a.navbar-brand:hover {
+   color:#5AD1F4;
+}
+.navbar-inverse a.navbar-brand:focus {
+   color:#2554B8;
+}
+.navbar-inverse .navbar-nav>li>a {
+  color: #1F0A0A;
+  font-weight: 900;
+}
+.navbar-inverse .navbar-nav>li>a:hover {
+  color:#5AD1F4;
+}
+.navbar-inverse .navbar-nav>li>a:focus {
+  color:#2554B8;
+}
+.container{
+  background-color: #FFFFFF;
+  color:#2B2828;
+  font-family: '微軟正黑體';
+  font-weight: 900;
+}
+#index_intro{
+ margin-top: 30px;
+}
+div.intro_header{
+  font-size: 36px;
+  font-weight: 100;
+  margin-bottom: 20px;
+  margin-top: 25px;
+}
+.intro_img{
+  width:100%;
+}
