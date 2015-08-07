@@ -2,26 +2,28 @@
 
 @section('content')
 <style>
+body{
+  font-family: '微軟正黑體';
+}
 .content{
   margin-top: 20px;
 }
-.article_menu{
+.top_nav{
   border-radius: 15px;
-  background-color: #ACEABA;
-  width:100%;
-  float:left;
-  margin-bottom:15px;
-}
-.article_menu ul{
-  width:100%;
-  margin:auto;
-}
-.article_menu ul li{
+  background-color: #B0F1C6;
   padding:5px;
-  list-style-type:none;
-  margin-right: 15px;
-  float:right;
-
+  margin-bottom: 15px;
+}
+.top_nav .keyword{
+  font-weight: 900;
+  font-size: 24px;
+  padding:5px;
+}
+.article_menu .keyword_bar{
+  padding:10px;
+  font-size: 24px;
+  float:left;
+  font-weight: 900;
 }
 .block{
   margin-bottom: 15px;
@@ -66,12 +68,19 @@
 }
 </style>
   <section class='content'>
-    <nav class='article_menu'>
-      <ul>
-        <li><a class='btn btn-info' href='article/create'>發表文章</a></li>
-        <li><input type='text' name='search_article' id='search_article'  />  <button class='btn btn-info' id='search'>搜尋文章</button></li>
-      </ul>
-    </nav>
+    <div class='nav col-md-12 top_nav'>
+      <div  class='col-md-8 keyword'><?=$keyword?></div>
+      <div  class='col-md-3'><input type='text' name='search_article' id='search_article'  />  <button class='btn btn-info' id='search'>搜尋文章</button></div>
+      <div class='col-md-1'><a class='btn btn-info' href='article/create'>發表文章</a></div>
+    </div>
+      <?php
+        if(!is_null(Session::get('warning'))){
+          echo "<p class='text-danger'>".Session::get('warning')."</p>";
+        }
+        if(!is_null(Session::get('success'))){
+          echo "<p class='text-success'>".Session::get('success')."</p>";
+        }
+        ?>
       @foreach($articles as $article)
         <div class='col-md-4 block'>
           <div class='article'>
@@ -87,7 +96,7 @@
               </div>
             </div>
             <div class='article_body'>
-              {!! nl2br($article->body) !!}
+              {!! nl2br(e($article->body)) !!}
             </div>
           </div>
         </div>
@@ -96,7 +105,12 @@
   <script>
   $('#search').on('click',function(){
     var keyword = $('#search_article').val();
-    console.log(keyword);
+    if(keyword==''){
+
+    }else{
+      location.href = "<?=URL('article/"+ keyword +"/keyword')?>";
+    }
+    
   });
 </script>
 @endsection

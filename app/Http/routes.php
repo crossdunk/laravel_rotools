@@ -11,6 +11,8 @@
 |
 */
 
+Route::pattern('id', '[0-9]+');
+
 Route::get('/', 'IndexController@index');
 
 Route::group(['prefix'=>'auth','namespace'=>'Auth'],function(){
@@ -24,6 +26,7 @@ Route::group(['prefix'=>'auth','namespace'=>'Auth'],function(){
 
 Route::group(['prefix'=>'article','namespace'=>'Article'],function(){
   Route::get('/', 'ArticleController@index');
+  Route::get('{keyword}/keyword/', 'ArticleController@keyword');
   Route::get('create', [
     'middleware' => 'auth',
     'uses' => 'ArticleController@create'
