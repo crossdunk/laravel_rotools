@@ -46,7 +46,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/laravel/public">Mio Sole&Luna</a>
+                <a class="navbar-brand" href="/laravel_rotools/public">Mio Sole&Luna</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -56,7 +56,7 @@
                         <a href="#page-top"></a>
                     </li>
                     <li class="page-scroll">
-                        <a href="/laravel/public/">Home</a>
+                        <a href="/laravel_rotools/public/">Home</a>
                     </li>
                         @if (Auth::check())
                             <li class='page-scroll'><a href='{{ URL('auth/logout') }}'>Logout</a></li>

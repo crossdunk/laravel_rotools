@@ -26,7 +26,7 @@ Route::group(['prefix'=>'auth','namespace'=>'Auth'],function(){
 
 Route::group(['prefix'=>'article','namespace'=>'Article'],function(){
   Route::get('/', 'ArticleController@index');
-  Route::get('{keyword}/keyword/', 'ArticleController@keyword');
+  Route::get('{type}/search/{keyword}/', 'ArticleController@keyword');
   Route::get('create', [
     'middleware' => 'auth',
     'uses' => 'ArticleController@create'

@@ -4,7 +4,6 @@ use Validator;
 use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller {
@@ -18,21 +17,54 @@ class ArticleController extends Controller {
 	{
 		$articles = DB::table('articles')->select('users.id as user_id','articles.id as id','title','name','body','articles.created_at as created_at')
 							->leftjoin('users','articles.user_id','=','users.id')
-							->orderBy('articles.created_at','DESC')->get();
-		$keyword = '';
-		$data = compact('articles','keyword');
+							->orderBy('articles.created_at','DESC')->paginate(9);
+       $articles->setPath('article');
+		$data = compact('articles');
 		return view('article.index',$data);
 	}
 
-	public function keyword($keyword)
+	public function keyword($type,$keyword)
 	{
+          $data = compact('keyword','type');
+          
+          $rules = [
+            'keyword'=>'required',
+            'type'=>'required',
+          ];
+
+          $messages = [
+             'keyword.required' => '你必須輸入關鍵字!',
+             'type.required' => '你必須選擇查詢類型!',
+          ];
+
+          $validator = Validator::make($data, $rules,$messages);
+          if ($validator->fails()) {
+                  return redirect('article')
+                  ->withErrors($validator)
+                  ->withInput();
+          }
 		$query_keyword = '%'.$keyword.'%';
-		$articles = DB::table('articles')->select('users.id as user_id','articles.id as id','title','name','body','articles.created_at as created_at')
-							->leftjoin('users','articles.user_id','=','users.id')
-							->where('keyword','like',$query_keyword)
-							->orderBy('articles.created_at','DESC')->get();
-		$data = compact('articles','keyword');
-		return view('article.index',$data);
+
+      if($type=='user'){
+        $get_user = array();
+        $users = \App\User::select('id')->where('name','like',$query_keyword)->get();
+        foreach($users as $user){
+          array_push($get_user,$user->id);
+        }
+        if(is_null($users)) return redirect('article')->with('warning','査無此作者');
+       $articles = DB::table('articles')->select('users.id as user_id','articles.id as id','title','name','body','articles.created_at as created_at')
+        ->leftjoin('users','articles.user_id','=','users.id')
+        ->whereIn('user_id',$get_user)
+        ->orderBy('articles.created_at','DESC')->get();
+      }else{
+        $articles = DB::table('articles')->select('users.id as user_id','articles.id as id','title','name','body','articles.created_at as created_at')
+        ->leftjoin('users','articles.user_id','=','users.id')
+        ->where($type,'like',$query_keyword)
+        ->orderBy('articles.created_at','DESC')->get();
+      }
+      $data = compact('articles','keyword','type');
+      return view('article.search',$data);
+		
 	}
 	/**
 	 * Show the form for creating a new resource.
@@ -101,6 +133,9 @@ class ArticleController extends Controller {
 		//
 
 		$article = \App\Article::find($id);
+        if(is_null($article)){
+          return redirect('article')->with('warning','此篇文章不存在');
+        }
 		$data = compact('article');
 		return view('article.show',$data);
 	}

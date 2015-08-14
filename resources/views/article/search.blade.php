@@ -7,7 +7,6 @@ body{
 }
 .content{
   margin-top: 20px;
-  height:100%;
 }
 .top_nav{
   border-radius: 15px;
@@ -68,11 +67,17 @@ body{
   font-weight: 300;
 }
 </style>
+<?php
+  if($type=='title') $type = '標題';
+  if($type=='body') $type = '內文';
+  if($type=='keyword') $type = '關鍵字';
+  if($type=='user') $type = '作者';
+?>
   <section class='content'>
     <div class='nav col-md-12 top_nav'>
-      <div  class='col-md-8'></div>
+      <div  class='col-md-7 keyword'>以<?=$type.'搜尋：'.$keyword?></div>
       <div  class='col-md-3'>
-        <input type='text' name='search_article' id='search_article' value="{{ Request::old('keyword') }}"  />
+        <input type='text' name='search_article' id='search_article'  />
         <div class="btn-group">
         <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         搜尋類型 <span class="caret"></span>
@@ -85,7 +90,8 @@ body{
           </ul>
         </div>
       </div>
-      <div class='col-md-1'><a class='btn btn-info' href='article/create'>發表文章</a></div>
+      <div class='col-md-1'><a class='btn btn-info' href="{{ URL('article') }}">回文章列表</a></div>
+      <div class='col-md-1'><a class='btn btn-info' href="{{ URL('article/create') }}">發表文章</a></div>
     </div>
       <?php
         if(!is_null(Session::get('warning'))){
@@ -116,13 +122,8 @@ body{
           </div>
         </div>
       @endforeach
-      </div>
-
-      
+     </div>
   </section>
-  <nav class="text-center">
-      {!! $articles->render() !!}
-  </nav>
   <script>
   $('.dropdown-menu li a').on('click',function(){
       var type = $(this).attr('alt');

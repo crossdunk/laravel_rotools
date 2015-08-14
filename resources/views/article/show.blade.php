@@ -26,7 +26,7 @@ body{
 }
 </style>
   <section class='content col-md-8'>
-        <h1>{{ $article->title }}</h1>
+       <h1>{{ $article->title }}</h1>
         <h3>{{ $article->user->name }}</h3>
          <?php
           if(!is_null(Session::get('warning'))){
@@ -36,18 +36,17 @@ body{
             echo "<p class='text-success'>".Session::get('success')."</p>";
           }
         ?>
-        @if (\Auth::check()) 
-          @if($article->user->id == Auth::user()->id)
-            <div class='row tool'>
+        <div class='row tool'>
+          <a href="{{ URL('article') }}" class='btn btn-primary col-md-2'>‹‹ 回文章列表</a>
+        @if (\Auth::check() && $article->user->id == Auth::user()->id) 
               <a href="{{ URL('article/' .$article->id.'/edit') }}" class='btn btn-info col-md-1 '>編輯</a>
               <form id='delete' method='post' action='{{ URL("article/".$article->id) }}'>
                 <input name="_method" type="hidden" value="DELETE">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <input type='submit' value='刪除' class='btn btn-danger  col-md-1'>
               </form>
-            </div>
-          @endif
         @endif
+        </div>
         
     <hr />
     <div class='body'>
@@ -58,12 +57,16 @@ body{
   <section class='col-md-8 comments'>
     <div class='label'>
       <?php
+      $keywords = '';
+      if($article->keyword!=''){
         $keywords = explode(',',$article->keyword);
+        }
       ?>
-      @foreach($keywords as $keyword)
-        <a href="{{ URL('article/'. $keyword .'/keyword') }}" class='btn btn-info'>{!! $keyword !!}</a>| 
-      @endforeach
-      
+      @if($keywords!='')
+        @foreach($keywords as $keyword)
+          <a href="{{ URL('article/keyword/search/'. $keyword .'') }}" class='btn btn-info'>{!! $keyword !!}</a>| 
+        @endforeach
+      @endif
     </div>
     <hr />
     <h1 class='title_comment'>Comments</h1>
