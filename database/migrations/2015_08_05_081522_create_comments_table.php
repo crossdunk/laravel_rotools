@@ -18,8 +18,8 @@ class CreateCommentsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('body');
-            $table->string('user_id');
-            $table->string('article_id');
+            $table->integer('user_id');
+            $table->integer('article_id');
             $table->timestamps();
         });
     }

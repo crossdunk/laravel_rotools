@@ -19,7 +19,7 @@ class CreateArticleTable extends Migration
             $table->string('title');
             $table->text('body');
             $table->string('keyword');
-            $table->string('user_id');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }
