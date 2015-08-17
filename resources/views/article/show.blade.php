@@ -38,7 +38,7 @@ body{
         ?>
         <div class='row tool'>
           <a href="{{ URL('article') }}" class='btn btn-primary col-md-2'>‹‹ 回文章列表</a>
-        @if (\Auth::check() && $article->user->id == Auth::user()->id) 
+        @if (\Auth::check() && ($article->user->id == Auth::user()->id || Auth::user()->permission==2 ) )
               <a href="{{ URL('article/' .$article->id.'/edit') }}" class='btn btn-info col-md-1 '>編輯</a>
               <form id='delete' method='post' action='{{ URL("article/".$article->id) }}'>
                 <input name="_method" type="hidden" value="DELETE">

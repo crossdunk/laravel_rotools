@@ -16,6 +16,7 @@ $factory->define(App\User::class, function ($faker) {
         'name' => $faker->name,
         'email' => $faker->email,
         'password' => str_random(10),
+        'permission' => '0',
         'remember_token' => str_random(10),
     ];
 });
@@ -25,7 +26,7 @@ $factory->define(App\Article::class, function ($faker) {
         'title' => $faker->word,
         'body' => $faker->sentence,
         'keyword'=>$faker->sentence,
-        'user_id'=>'1',
+        'user_id'=>'9',
     ];
 });
 
@@ -33,7 +34,7 @@ $factory->define(App\Comment::class, function ($faker) {
     return [
         'title'=>$faker->word,
         'body'=>$faker->sentence,
-        'user_id'=>'1',
-        'article_id'=>rand(1,20),
+        'user_id'=>'11',
+        'article_id'=>rand(1,50),
     ];
 });

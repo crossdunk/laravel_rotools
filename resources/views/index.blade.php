@@ -4,9 +4,11 @@
     <header>
         <?php
             $hello = 'Guild : Mio SoL&LunA';
+            $admin = false;
             if(Auth::check()){
                 $user = Auth::user();
                 $hello = 'Hi '.$user->name;
+                $admin = (Auth::user()->permission==2)?true:false;
             }
         ?>
         <div class="container">
@@ -45,6 +47,14 @@
                     </a>
                     <i class="glyphicon glyphicon-book"></i> 遊戲筆記
                 </div>
+                @if($admin)
+                <div class="col-sm-4 portfolio-item">
+                    <a href="admin" class="portfolio-link" >
+                    <img src="img/portfolio/safe.png" class="img-responsive" alt="">
+                    </a>
+                    <i class="glyphicon glyphicon-book"></i> 會員管理
+                </div>
+                @endif
             </div>
         </div>
     </section>

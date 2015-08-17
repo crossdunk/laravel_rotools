@@ -40,5 +40,13 @@ Route::group(['prefix'=>'article','namespace'=>'Article'],function(){
 });
 
 
+Route::group(['prefix'=>'admin','namespace'=>'Admin'],function(){
+  Route::get('/',[
+    'middleware' => 'auth',
+    'uses'=>'AdminController@index'
+    ]);
+  Route::delete('/{id}','AdminController@destroy');
+});
+
 Route::get('test','TestController@index');
 

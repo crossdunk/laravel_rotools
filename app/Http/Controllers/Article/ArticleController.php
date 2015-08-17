@@ -221,11 +221,11 @@ class ArticleController extends Controller {
 		$article = \App\Article::find($id);
 
 		 if (is_null($article)) {
-            return redirect()->route('article')
+            return redirect('article')
                              ->with('warning', '找不到該文章');
         }
-        if ($article && $article->user->id != \Auth::user()->id) {
-            return redirect()->route('article')
+        if ($article && $article->user->id != \Auth::user()->id && \Auth::user()->permission!=2) {
+            return redirect('article')
                              ->with('warning', '您沒有權限刪除這篇文章');
         }
 
